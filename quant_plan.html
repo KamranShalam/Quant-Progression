@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kamran Shalam — Quant Career Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0c10;--bg2:#111318;--bg3:#181c23;--bg4:#1e2330;
+  --border:#2a2f3d;--border2:#363d52;
+  --text:#e8eaf0;--muted:#6b7280;--muted2:#9ca3af;
+  --blue:#3b82f6;--blue-bg:#1e2d4a;
+  --teal:#14b8a6;--teal-bg:#0f2b28;
+  --amber:#f59e0b;--amber-bg:#2d2008;
+  --red:#ef4444;--red-bg:#2d1010;
+  --green:#22c55e;--green-bg:#0f2d1a;
+  --purple:#a78bfa;--purple-bg:#1e1538;
+  --mono:'JetBrains Mono',monospace;
+  --serif:'DM Serif Display',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--mono);background:var(--bg);color:var(--text);min-height:100vh;font-size:13px;line-height:1.6;}
+::-webkit-scrollbar{width:5px;height:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+
+/* HEADER */
+.hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 1.5rem;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;height:52px;gap:16px;}
+.logo{font-family:var(--serif);font-size:17px;white-space:nowrap;}.logo span{color:var(--blue);}
+.tagline{font-size:10px;color:var(--muted);letter-spacing:.08em;margin-left:14px;white-space:nowrap;}
+.clock{font-size:10px;color:var(--muted);white-space:nowrap;}
+
+/* SEARCH BAR */
+.search-wrap{flex:1;max-width:420px;position:relative;}
+.search-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:5px;color:var(--text);font-family:var(--mono);font-size:12px;padding:7px 36px 7px 32px;outline:none;transition:border-color .2s;}
+.search-input:focus{border-color:var(--blue);}
+.search-input::placeholder{color:var(--muted);}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px;pointer-events:none;}
+.search-kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:9px;color:var(--muted);background:var(--bg4);border:1px solid var(--border2);border-radius:3px;padding:1px 5px;pointer-events:none;}
+.search-clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;line-height:1;display:none;}
+.search-clear.show{display:block;}
+
+/* SEARCH RESULTS OVERLAY */
+.search-results{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;z-index:500;box-shadow:0 12px 32px rgba(0,0,0,.6);max-height:420px;overflow-y:auto;display:none;}
+.search-results.open{display:block;}
+.sr-header{padding:8px 12px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);}
+.sr-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .1s;}
+.sr-item:last-child{border-bottom:none;}
+.sr-item:hover,.sr-item.focused{background:var(--bg3);}
+.sr-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.sr-body{flex:1;min-width:0;}
+.sr-name{font-size:12px;font-weight:500;margin-bottom:2px;}
+.sr-name mark{background:rgba(59,130,246,.3);color:var(--blue);border-radius:2px;padding:0 1px;}
+.sr-sub{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sr-meta{display:flex;align-items:center;gap:6px;margin-top:4px;flex-shrink:0;}
+.sr-empty{padding:24px 12px;text-align:center;font-size:12px;color:var(--muted);}
+
+/* METRICS BAR */
+.mbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 1.5rem;display:grid;grid-template-columns:repeat(6,1fr);}
+.met{padding:6px 12px;border-right:1px solid var(--border);text-align:center;}.met:last-child{border-right:none;}
+.mv{font-size:20px;font-weight:700;line-height:1;margin-bottom:3px;}
+.ml{font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+
+/* MASTER PROGRESS */
+.mast{background:var(--bg2);border-bottom:1px solid var(--border);padding:9px 1.5rem;display:flex;align-items:center;gap:14px;}
+.mast-lbl{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;}
+.pt{flex:1;height:5px;background:var(--bg4);border-radius:3px;overflow:hidden;}
+.pf{height:100%;border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1);background:linear-gradient(90deg,var(--blue),var(--teal));}
+.ppct{font-size:11px;font-weight:700;color:var(--blue);white-space:nowrap;min-width:34px;text-align:right;}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 130px);}
+
+/* SIDEBAR */
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:1.25rem 0;position:sticky;top:130px;height:calc(100vh - 130px);overflow-y:auto;}
+.sb-h{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 1rem;margin-bottom:5px;margin-top:8px;}
+.ni{display:flex;align-items:center;gap:8px;padding:7px 1rem;cursor:pointer;transition:background .15s;border-left:2px solid transparent;font-size:11px;color:var(--muted2);}
+.ni:hover{background:var(--bg3);color:var(--text);}
+.ni.active{background:var(--bg3);color:var(--text);border-left-color:var(--blue);}
+.nd{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.np{margin-left:auto;font-size:9px;color:var(--muted);}
+
+/* MAIN */
+.main{padding:1.5rem;overflow-x:hidden;}
+.section{display:none;}.section.visible{display:block;}
+.sec-hdr{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+
+/* STATUS PILL */
+.status-pill{font-size:9px;padding:2px 7px;border-radius:3px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;cursor:pointer;border:1px solid transparent;transition:all .15s;user-select:none;}
+.s-todo{background:rgba(107,114,128,.15);color:#9ca3af;border-color:rgba(107,114,128,.3);}
+.s-inprog{background:rgba(245,158,11,.15);color:#fbbf24;border-color:rgba(245,158,11,.3);}
+.s-done{background:rgba(34,197,94,.15);color:#4ade80;border-color:rgba(34,197,94,.3);}
+.s-todo:hover{background:rgba(245,158,11,.2);color:#fbbf24;}
+.s-inprog:hover{background:rgba(34,197,94,.2);color:#4ade80;}
+.s-done:hover{background:rgba(107,114,128,.2);color:#9ca3af;}
+
+/* PRIORITY */
+.pb{font-size:9px;padding:2px 6px;border-radius:3px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;}
+.p-urgent{background:rgba(239,68,68,.15);color:#f87171;}
+.p-high{background:rgba(245,158,11,.15);color:#fbbf24;}
+.p-med{background:rgba(59,130,246,.15);color:#60a5fa;}
+.p-low{background:rgba(107,114,128,.15);color:#9ca3af;}
+.p-opt{background:rgba(167,139,250,.15);color:var(--purple);}
+
+/* PHASE HEADER */
+.ph-hdr{display:flex;align-items:center;gap:14px;margin-bottom:1.25rem;padding-bottom:.9rem;border-bottom:1px solid var(--border);}
+.ph-num{width:36px;height:36px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;}
+.ph-info{flex:1;}
+.ph-title{font-size:14px;font-weight:700;margin-bottom:2px;}
+.ph-dates{font-size:10px;color:var(--muted);}
+.ph-bwrap{width:130px;}
+.ph-blbl{font-size:9px;color:var(--muted);margin-bottom:3px;display:flex;justify-content:space-between;}
+.ph-btrk{height:3px;background:var(--bg4);border-radius:2px;overflow:hidden;}
+.ph-bfil{height:100%;border-radius:2px;transition:width .5s ease;}
+
+/* ADD TASK BUTTON (per phase) */
+.add-task-btn{display:flex;align-items:center;gap:6px;padding:8px 12px;border:1px dashed var(--border2);border-radius:5px;background:none;color:var(--muted);font-family:var(--mono);font-size:11px;cursor:pointer;width:100%;margin-top:8px;transition:all .2s;letter-spacing:.02em;}
+.add-task-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-bg);}
+
+/* TASK TABLE */
+.tt{width:100%;border-collapse:collapse;}
+.tt th{text-align:left;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:7px 10px;border-bottom:1px solid var(--border);background:var(--bg2);font-weight:500;}
+.tr{border-bottom:1px solid var(--border);transition:background .15s;}
+.tr:hover{background:var(--bg3);}
+.tr.st-done .tn{text-decoration:line-through;color:var(--muted);}
+.tr.st-done{opacity:.6;}
+.tr.st-inprog .tn{color:var(--amber);}
+.tc{padding:9px 10px;vertical-align:top;}
+.tn{font-size:12px;font-weight:500;margin-bottom:2px;}
+.tsb{font-size:10px;color:var(--muted);line-height:1.4;}
+.tdl{font-size:10px;white-space:nowrap;}
+.tr.custom-task .tn::after{content:'custom';font-size:8px;background:var(--purple-bg);color:var(--purple);border-radius:3px;padding:0 4px;margin-left:6px;font-weight:700;vertical-align:middle;}
+
+/* NOTES */
+.nwrap{padding:0 10px 8px 38px;display:none;}
+.nwrap.open{display:block;}
+.nlbl{font-size:9px;color:var(--muted);margin-bottom:3px;letter-spacing:.06em;text-transform:uppercase;}
+.ntxt{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:var(--mono);font-size:11px;padding:7px 9px;resize:vertical;min-height:52px;outline:none;transition:border-color .2s;}
+.ntxt:focus{border-color:var(--blue);}
+.ntxt::placeholder{color:var(--muted);}
+.nexpbtn{background:none;border:none;cursor:pointer;color:var(--muted);font-size:9px;font-family:var(--mono);padding:0;letter-spacing:.05em;transition:color .15s;}
+.nexpbtn:hover{color:var(--blue);}
+.del-btn{background:none;border:none;cursor:pointer;color:var(--muted);font-size:11px;font-family:var(--mono);padding:0;transition:color .15s;line-height:1;}
+.del-btn:hover{color:var(--red);}
+
+/* WORKFLOW DROPDOWN */
+.wf-menu{position:absolute;background:var(--bg3);border:1px solid var(--border2);border-radius:5px;padding:4px;z-index:600;min-width:130px;box-shadow:0 8px 24px rgba(0,0,0,.5);}
+.wf-opt{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:3px;cursor:pointer;font-size:11px;color:var(--muted2);transition:background .1s;}
+.wf-opt:hover{background:var(--bg4);color:var(--text);}
+.wf-opt.active{color:var(--text);}
+.wf-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:700;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:1.5rem;width:520px;max-width:95vw;max-height:90vh;overflow-y:auto;transform:translateY(16px);transition:transform .2s;}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+.modal-sub{font-size:11px;color:var(--muted);margin-bottom:1.25rem;}
+.form-row{margin-bottom:14px;}
+.form-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:block;}
+.form-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 10px;outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:var(--blue);}
+.form-input::placeholder{color:var(--muted);}
+.form-select{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 10px;outline:none;cursor:pointer;transition:border-color .2s;}
+.form-select:focus{border-color:var(--blue);}
+.form-textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 10px;outline:none;resize:vertical;min-height:64px;transition:border-color .2s;}
+.form-textarea:focus{border-color:var(--blue);}
+.form-textarea::placeholder{color:var(--muted);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border);}
+.btn{font-family:var(--mono);font-size:11px;padding:7px 14px;border-radius:4px;cursor:pointer;letter-spacing:.04em;transition:all .15s;}
+.btn-cancel{background:var(--bg3);border:1px solid var(--border2);color:var(--muted2);}
+.btn-cancel:hover{border-color:var(--border2);color:var(--text);}
+.btn-primary{background:var(--blue-bg);border:1px solid var(--blue);color:var(--blue);}
+.btn-primary:hover{background:var(--blue);color:white;}
+.btn-danger{background:var(--red-bg);border:1px solid var(--red);color:var(--red);}
+.btn-danger:hover{background:var(--red);color:white;}
+.form-error{font-size:10px;color:var(--red);margin-top:4px;display:none;}
+.form-error.show{display:block;}
+
+/* KANBAN */
+.kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:2rem;}
+.kb-col{background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;min-height:200px;}
+.kb-col-hdr{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.kb-col-title{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.kb-count{font-size:10px;color:var(--muted);background:var(--bg4);padding:2px 7px;border-radius:10px;}
+.kb-body{padding:8px;display:flex;flex-direction:column;gap:6px;min-height:80px;}
+.kb-card{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:9px 11px;cursor:grab;transition:border-color .15s,transform .1s;user-select:none;}
+.kb-card:hover{border-color:var(--border2);}
+.kb-card.dragging{opacity:.4;transform:scale(.97);}
+.kb-col.drop-target{background:var(--bg3);}
+.kb-cname{font-size:11px;font-weight:600;margin-bottom:3px;line-height:1.3;}
+.kb-cmeta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:5px;}
+.kb-phase{font-size:9px;color:var(--muted);background:var(--bg4);padding:1px 5px;border-radius:3px;}
+.kb-drag-hint{font-size:10px;color:var(--muted);text-align:center;padding:16px;border:1px dashed var(--border);border-radius:4px;margin:4px;}
+
+/* HISTORY */
+.hist-filters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.hf-btn{font-family:var(--mono);font-size:10px;padding:5px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;color:var(--muted2);cursor:pointer;transition:all .15s;}
+.hf-btn:hover,.hf-btn.active{background:var(--blue-bg);border-color:var(--blue);color:var(--blue);}
+.hist-entry{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.hist-entry:last-child{border-bottom:none;}
+.hist-time{font-size:10px;color:var(--muted);white-space:nowrap;min-width:120px;}
+.hist-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.hist-body{flex:1;}
+.hist-name{font-size:12px;font-weight:500;margin-bottom:2px;}
+.hist-detail{font-size:10px;color:var(--muted);}
+.hist-revert{font-size:9px;padding:2px 8px;background:var(--bg3);border:1px solid var(--border2);border-radius:3px;cursor:pointer;color:var(--muted2);font-family:var(--mono);transition:all .15s;white-space:nowrap;}
+.hist-revert:hover{border-color:var(--amber);color:var(--amber);}
+.hist-empty{text-align:center;padding:3rem;color:var(--muted);font-size:12px;}
+
+/* DASHBOARD */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem;}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:.9rem 1.1rem;}
+.sv{font-size:24px;font-weight:700;margin-bottom:2px;}.slbl{font-size:10px;color:var(--muted);}
+
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:2rem;}
+.pcard{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.1rem;position:relative;overflow:hidden;}
+.pcard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;}
+.pc1::before{background:var(--blue);}.pc2::before{background:var(--teal);}.pc3::before{background:var(--amber);}.pc4::before{background:var(--red);}
+.pc-ttl{font-size:12px;font-weight:700;margin-bottom:3px;}.pc-sub{font-size:10px;color:var(--muted);margin-bottom:8px;}
+.pc-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}.pc-tag{font-size:9px;padding:1px 5px;background:var(--bg4);border-radius:3px;color:var(--muted2);}
+.pc-desc{font-size:11px;color:var(--muted2);line-height:1.5;margin-bottom:10px;}
+.pc-steps{font-size:10px;color:var(--muted);}.pc-step{display:flex;gap:6px;margin-bottom:4px;align-items:flex-start;}
+.pc-sn{width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.s-pc1{background:var(--blue-bg);color:var(--blue);}.s-pc2{background:var(--teal-bg);color:var(--teal);}.s-pc3{background:var(--amber-bg);color:var(--amber);}.s-pc4{background:var(--red-bg);color:var(--red);}
+.pc-prog-lbl{font-size:9px;color:var(--muted);display:flex;justify-content:space-between;margin-top:10px;margin-bottom:3px;}
+.pc-pt{height:3px;background:var(--bg4);border-radius:2px;overflow:hidden;}
+.pc-pf{height:100%;border-radius:2px;transition:width .5s;}
+
+/* RESOURCES */
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.rc{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:.9rem;}
+.rt{font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+.rn{font-size:11px;font-weight:700;margin-bottom:3px;}.rn a{color:var(--blue);text-decoration:none;}.rn a:hover{text-decoration:underline;}
+.rd{font-size:10px;color:var(--muted2);line-height:1.4;}
+
+/* TIMELINE */
+.tl{position:relative;padding-left:20px;margin-bottom:2rem;}
+.tl::before{content:'';position:absolute;left:5px;top:0;bottom:0;width:1px;background:var(--border2);}
+.tl-item{position:relative;margin-bottom:1.25rem;}
+.tl-dot{position:absolute;left:-17px;top:3px;width:9px;height:9px;border-radius:50%;border:2px solid var(--bg);}
+.tl-m{font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;}
+.tl-chips{display:flex;flex-wrap:wrap;gap:5px;}
+.tl-chip{font-size:10px;padding:2px 7px;border-radius:3px;border:1px solid;cursor:default;}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--bg3);border:1px solid var(--border2);border-radius:5px;padding:9px 14px;font-size:11px;z-index:9999;transform:translateY(60px);opacity:0;transition:all .3s ease;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+
+/* CONFETTI */
+@keyframes cf{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+.cf{position:fixed;width:7px;height:7px;pointer-events:none;z-index:9998;animation:cf 2s ease-in forwards;}
+
+/* SEARCH HIGHLIGHT in tables */
+.search-hl{background:rgba(59,130,246,.25);color:var(--blue);border-radius:2px;padding:0 1px;}
+
+@media(max-width:900px){.layout{grid-template-columns:1fr;}.sidebar{display:none;}.mbar{grid-template-columns:repeat(3,1fr);}.proj-grid,.kanban{grid-template-columns:1fr;}.res-grid{grid-template-columns:repeat(2,1fr);}.search-wrap{max-width:200px;}.tagline{display:none;}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div style="display:flex;align-items:center;flex-shrink:0">
+    <div class="logo">Kamran <span>Shalam</span></div>
+    <div class="tagline">QUANT CAREER PIVOT</div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input class="search-input" id="search-input" type="text" placeholder="Search tasks… (press / to focus)" autocomplete="off" oninput="onSearch()" onkeydown="searchKeyNav(event)">
+    <span class="search-kbd" id="search-kbd">/</span>
+    <button class="search-clear" id="search-clear" onclick="clearSearch()" title="Clear search">×</button>
+    <div class="search-results" id="search-results"></div>
+  </div>
+
+  <div id="clock" class="clock"></div>
+</header>
+
+<div class="mbar">
+  <div class="met"><div class="mv" id="m-total" style="color:var(--blue)">0%</div><div class="ml">Overall</div></div>
+  <div class="met"><div class="mv" id="m-done" style="color:var(--green)">0</div><div class="ml">Done</div></div>
+  <div class="met"><div class="mv" id="m-inprog" style="color:var(--amber)">0</div><div class="ml">In Progress</div></div>
+  <div class="met"><div class="mv" id="m-todo" style="color:var(--muted)">0</div><div class="ml">To Do</div></div>
+  <div class="met"><div class="mv" id="m-streak" style="color:var(--teal)">0</div><div class="ml">Day Streak</div></div>
+  <div class="met"><div class="mv" id="m-phase" style="color:var(--purple)">P1</div><div class="ml">Active Phase</div></div>
+</div>
+
+<div class="mast">
+  <div class="mast-lbl">Master Progress</div>
+  <div class="pt"><div class="pf" id="mfill" style="width:0%"></div></div>
+  <div class="ppct" id="mpct">0%</div>
+</div>
+
+<div class="layout">
+<nav class="sidebar">
+  <div class="sb-h">Overview</div>
+  <div class="ni active" onclick="nav('dashboard')" data-s="dashboard"><div class="nd" style="background:var(--blue)"></div>Dashboard</div>
+  <div class="ni" onclick="nav('kanban')" data-s="kanban"><div class="nd" style="background:var(--purple)"></div>Kanban Board</div>
+  <div class="ni" onclick="nav('history')" data-s="history"><div class="nd" style="background:var(--teal)"></div>History Log</div>
+  <div class="ni" onclick="nav('timeline')" data-s="timeline"><div class="nd" style="background:var(--muted)"></div>Timeline</div>
+  <div class="sb-h">Phases</div>
+  <div class="ni" onclick="nav('phase1')" data-s="phase1"><div class="nd" style="background:var(--blue)"></div>P1 — Apply & Foundations<span class="np" id="np1">0%</span></div>
+  <div class="ni" onclick="nav('phase2')" data-s="phase2"><div class="nd" style="background:var(--teal)"></div>P2 — Build Skills<span class="np" id="np2">0%</span></div>
+  <div class="ni" onclick="nav('phase3')" data-s="phase3"><div class="nd" style="background:var(--amber)"></div>P3 — Portfolio<span class="np" id="np3">0%</span></div>
+  <div class="ni" onclick="nav('phase4')" data-s="phase4"><div class="nd" style="background:var(--red)"></div>P4 — Credentials<span class="np" id="np4">0%</span></div>
+  <div class="sb-h">Reference</div>
+  <div class="ni" onclick="nav('projects')" data-s="projects"><div class="nd" style="background:var(--purple)"></div>Projects</div>
+  <div class="ni" onclick="nav('resources')" data-s="resources"><div class="nd" style="background:var(--muted)"></div>Resources</div>
+  <div style="padding:.75rem 1rem;margin-top:.5rem;">
+    <button onclick="openAddModal(null)" style="width:100%;background:var(--blue-bg);border:1px solid var(--blue);color:var(--blue);font-family:var(--mono);font-size:10px;padding:6px;border-radius:4px;cursor:pointer;letter-spacing:.05em;margin-bottom:6px;">+ ADD TASK</button>
+    <button onclick="resetAll()" style="width:100%;background:var(--red-bg);border:1px solid var(--red);color:var(--red);font-family:var(--mono);font-size:10px;padding:6px;border-radius:4px;cursor:pointer;letter-spacing:.05em;">RESET ALL</button>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- DASHBOARD -->
+<div id="sec-dashboard" class="section visible">
+  <div class="stat-grid">
+    <div class="stat-card"><div class="sv" id="d-done" style="color:var(--green)">0</div><div class="slbl">Tasks completed today</div></div>
+    <div class="stat-card"><div class="sv" id="d-streak" style="color:var(--teal)">0 days</div><div class="slbl">Current streak</div></div>
+    <div class="stat-card"><div class="sv" id="d-next" style="color:var(--amber);font-size:13px;margin-top:4px;">—</div><div class="slbl">Next recommended task</div></div>
+  </div>
+  <div class="sec-hdr">Phase progress</div>
+  <div id="dash-phasebars" style="margin-bottom:1.5rem;"></div>
+  <div class="sec-hdr">Workflow summary</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.5rem;" id="wf-summary"></div>
+  <div class="sec-hdr">Urgent & high priority — open tasks</div>
+  <div id="urgent-tasks" style="display:grid;gap:5px;margin-bottom:1.5rem;"></div>
+  <div class="sec-hdr">Target roles</div>
+  <table class="tt"><thead><tr><th>Role</th><th>Company</th><th>Match</th><th>Salary</th><th>Action</th></tr></thead><tbody id="roles-tbl"></tbody></table>
+</div>
+
+<!-- KANBAN -->
+<div id="sec-kanban" class="section">
+  <div class="sec-hdr" style="display:flex;align-items:center;justify-content:space-between;">
+    <span>Kanban Board — drag cards or click status pill to move</span>
+    <div style="display:flex;gap:6px;align-items:center;">
+      <button onclick="openAddModal(null)" style="background:var(--blue-bg);border:1px solid var(--blue);color:var(--blue);font-family:var(--mono);font-size:10px;padding:5px 10px;border-radius:4px;cursor:pointer;">+ Add Task</button>
+      <select id="kb-filter-phase" onchange="renderKanban()" style="background:var(--bg2);border:1px solid var(--border);color:var(--muted2);font-family:var(--mono);font-size:10px;padding:4px 8px;border-radius:4px;cursor:pointer;">
+        <option value="">All phases</option>
+        <option value="phase1">P1 — Apply & Foundations</option>
+        <option value="phase2">P2 — Build Skills</option>
+        <option value="phase3">P3 — Portfolio</option>
+        <option value="phase4">P4 — Credentials</option>
+      </select>
+    </div>
+  </div>
+  <div class="kanban" id="kanban-board"></div>
+</div>
+
+<!-- HISTORY -->
+<div id="sec-history" class="section">
+  <div class="sec-hdr">Activity History</div>
+  <div class="hist-filters">
+    <button class="hf-btn active" onclick="filterHist('all',this)">All</button>
+    <button class="hf-btn" onclick="filterHist('done',this)">Completed</button>
+    <button class="hf-btn" onclick="filterHist('inprog',this)">Started</button>
+    <button class="hf-btn" onclick="filterHist('todo',this)">Reverted</button>
+    <button class="hf-btn" onclick="filterHist('today',this)">Today</button>
+    <button class="hf-btn" onclick="filterHist('week',this)">This week</button>
+  </div>
+  <div id="hist-list"></div>
+</div>
+
+<!-- TIMELINE -->
+<div id="sec-timeline" class="section">
+  <div class="sec-hdr">12-Month Plan</div>
+  <div class="tl" id="tl-view"></div>
+</div>
+
+<!-- PHASE 1 -->
+<div id="sec-phase1" class="section">
+  <div class="ph-hdr">
+    <div class="ph-num" style="background:var(--blue-bg);color:var(--blue)">P1</div>
+    <div class="ph-info"><div class="ph-title" style="color:var(--blue)">Apply Now & Build Foundations</div><div class="ph-dates">Months 1–3 · Goal: Land a finance data engineering role</div></div>
+    <div class="ph-bwrap"><div class="ph-blbl"><span>Progress</span><span id="p1pct">0%</span></div><div class="ph-btrk"><div class="ph-bfil" id="p1fil" style="background:var(--blue);width:0%"></div></div></div>
+  </div>
+  <table class="tt" id="tt-phase1"></table>
+  <button class="add-task-btn" onclick="openAddModal('phase1')">+ Add task to Phase 1</button>
+</div>
+
+<!-- PHASE 2 -->
+<div id="sec-phase2" class="section">
+  <div class="ph-hdr">
+    <div class="ph-num" style="background:var(--teal-bg);color:var(--teal)">P2</div>
+    <div class="ph-info"><div class="ph-title" style="color:var(--teal)">Build Quant Skills</div><div class="ph-dates">Months 2–5 · Goal: Close the stats and finance knowledge gaps</div></div>
+    <div class="ph-bwrap"><div class="ph-blbl"><span>Progress</span><span id="p2pct">0%</span></div><div class="ph-btrk"><div class="ph-bfil" id="p2fil" style="background:var(--teal);width:0%"></div></div></div>
+  </div>
+  <table class="tt" id="tt-phase2"></table>
+  <button class="add-task-btn" onclick="openAddModal('phase2')">+ Add task to Phase 2</button>
+</div>
+
+<!-- PHASE 3 -->
+<div id="sec-phase3" class="section">
+  <div class="ph-hdr">
+    <div class="ph-num" style="background:var(--amber-bg);color:var(--amber)">P3</div>
+    <div class="ph-info"><div class="ph-title" style="color:var(--amber)">Portfolio & Competition</div><div class="ph-dates">Months 6–9 · Goal: Complete portfolio, enter competitions, target quant dev</div></div>
+    <div class="ph-bwrap"><div class="ph-blbl"><span>Progress</span><span id="p3pct">0%</span></div><div class="ph-btrk"><div class="ph-bfil" id="p3fil" style="background:var(--amber);width:0%"></div></div></div>
+  </div>
+  <table class="tt" id="tt-phase3"></table>
+  <button class="add-task-btn" onclick="openAddModal('phase3')">+ Add task to Phase 3</button>
+</div>
+
+<!-- PHASE 4 -->
+<div id="sec-phase4" class="section">
+  <div class="ph-hdr">
+    <div class="ph-num" style="background:var(--red-bg);color:var(--red)">P4</div>
+    <div class="ph-info"><div class="ph-title" style="color:var(--red)">Formal Credentials & Quant Role</div><div class="ph-dates">Months 10–12 · Goal: CQF / credentials, land quant developer role</div></div>
+    <div class="ph-bwrap"><div class="ph-blbl"><span>Progress</span><span id="p4pct">0%</span></div><div class="ph-btrk"><div class="ph-bfil" id="p4fil" style="background:var(--red);width:0%"></div></div></div>
+  </div>
+  <table class="tt" id="tt-phase4"></table>
+  <button class="add-task-btn" onclick="openAddModal('phase4')">+ Add task to Phase 4</button>
+</div>
+
+<!-- PROJECTS -->
+<div id="sec-projects" class="section">
+  <div class="sec-hdr">Build These In Order</div>
+  <div class="proj-grid" id="proj-grid"></div>
+</div>
+
+<!-- RESOURCES -->
+<div id="sec-resources" class="section">
+  <div class="sec-hdr">Learning Resources</div>
+  <div class="res-grid" id="res-grid"></div>
+</div>
+
+</main>
+</div>
+
+<!-- WORKFLOW DROPDOWN -->
+<div id="wf-dropdown" class="wf-menu" style="display:none;position:fixed;" onmouseleave="closeWf()">
+  <div class="wf-opt" onclick="setStatus(null,'todo')"><div class="wf-dot" style="background:#9ca3af"></div>To Do</div>
+  <div class="wf-opt" onclick="setStatus(null,'inprog')"><div class="wf-dot" style="background:#fbbf24"></div>In Progress</div>
+  <div class="wf-opt" onclick="setStatus(null,'done')"><div class="wf-dot" style="background:#4ade80"></div>Done</div>
+</div>
+
+<!-- ADD / EDIT TASK MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-title" id="modal-title">Add New Task</div>
+    <div class="modal-sub" id="modal-sub">Custom tasks are saved locally and persist across sessions.</div>
+    <div class="form-row">
+      <label class="form-label">Task name *</label>
+      <input class="form-input" id="f-name" type="text" placeholder="e.g. Research Goldman Sachs quant team structure" maxlength="120">
+      <div class="form-error" id="e-name">Task name is required.</div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Description / sub-text</label>
+      <textarea class="form-textarea" id="f-sub" placeholder="Add context, links, acceptance criteria…" rows="2" maxlength="300"></textarea>
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label class="form-label">Phase *</label>
+        <select class="form-select" id="f-phase">
+          <option value="phase1">P1 — Apply & Foundations</option>
+          <option value="phase2">P2 — Build Skills</option>
+          <option value="phase3">P3 — Portfolio</option>
+          <option value="phase4">P4 — Credentials</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Priority</label>
+        <select class="form-select" id="f-priority">
+          <option value="urgent">Urgent</option>
+          <option value="high">High</option>
+          <option value="med" selected>Medium</option>
+          <option value="low">Low</option>
+          <option value="optional">Optional</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <label class="form-label">Deadline / timing</label>
+        <input class="form-input" id="f-deadline" type="text" placeholder="e.g. Week 2, Month 3, ASAP">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Initial status</label>
+        <select class="form-select" id="f-status">
+          <option value="todo">To Do</option>
+          <option value="inprog">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Link (optional)</label>
+      <input class="form-input" id="f-link" type="url" placeholder="https://…">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-danger" id="modal-delete-btn" style="display:none;margin-right:auto;" onclick="deleteTask()">Delete task</button>
+      <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTask()">Save task</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════
+// BUILT-IN DATA
+// ═══════════════════════════════════════════════
+const BUILTIN_PHASES = {
+  phase1:{color:'var(--blue)',label:'P1',tasks:[
+    {id:'p1_1',name:'Set up public GitHub portfolio repo',sub:'Clean README, project descriptions, contact info',deadline:'Week 1',priority:'urgent',link:null},
+    {id:'p1_2',name:'Update LinkedIn — Quant Data Engineer positioning',sub:'Headline, about section referencing time-series & finance data, pin future projects',deadline:'Week 1',priority:'urgent',link:null},
+    {id:'p1_3',name:'Apply to Goldman Sachs — Data Engineer, Lakehouse & AI Platform',sub:'Tailored cover letter referencing gs-quant; align CV to Spark/Python requirements',deadline:'Week 1',priority:'urgent',link:'https://to.indeed.com/aapdv9kzcgtx'},
+    {id:'p1_4',name:'Apply to Aventum Group — Data Engineer (Insurance)',sub:'Highlight ETL, SQL optimisation, AWS; strong technical match',deadline:'Week 1',priority:'urgent',link:'https://to.indeed.com/aasbhpmkwvtn'},
+    {id:'p1_5',name:'Apply to InFact — Data Scientist, Credit Risk (£60–90k)',sub:'Emphasise Python pipelines and SQL on financial data; mention statistical modelling interest',deadline:'Week 2',priority:'high',link:'https://to.indeed.com/aapxxtb4j7zy'},
+    {id:'p1_6',name:'Subscribe to PyQuant News newsletter',sub:'Free weekly Python quant newsletter; keeps you current from day 1',deadline:'Week 1',priority:'high',link:'https://www.pyquantnews.com/'},
+    {id:'p1_7',name:'Complete DataCamp — Python for Finance',sub:'NumPy, Matplotlib, financial data fundamentals; 4hrs total',deadline:'Month 1',priority:'high',link:'https://www.datacamp.com/courses/introduction-to-python-for-finance'},
+    {id:'p1_8',name:'Build Project 1: Financial Risk Pipeline & Dashboard',sub:'yfinance → pandas → compute VaR/Sharpe/drawdown → Plotly Dash → deploy on AWS Lambda',deadline:'Month 2–3',priority:'high',link:null},
+    {id:'p1_9',name:'Register on eFinancialCareers and set up job alerts',sub:'Best UK platform for finance/quant roles; set alerts for "data engineer", "quant developer"',deadline:'Week 2',priority:'med',link:'https://www.efinancialcareers.co.uk/'},
+    {id:'p1_10',name:'Connect with 5 quant professionals on LinkedIn',sub:'Comment on their posts first; then connect with a personalised note',deadline:'Month 1',priority:'med',link:null},
+  ]},
+  phase2:{color:'var(--teal)',label:'P2',tasks:[
+    {id:'p2_1',name:'Complete Udemy — Quant Finance & Algo Trading in Python',sub:'204 lectures: CAPM, Black-Scholes, Monte Carlo, VaR, portfolio theory',deadline:'Month 3',priority:'high',link:'https://www.udemy.com/course/quantitative-finance-algorithmic-trading-in-python/'},
+    {id:'p2_2',name:'Work through QuantStart Self-Study Plan Parts I & II',sub:'Free; covers stats, econometrics, time-series (ARIMA/GARCH), ML for trading',deadline:'Month 2–4',priority:'high',link:'https://www.quantstart.com/articles/Self-Study-Plan-for-Becoming-a-Quantitative-Trader-Part-I/'},
+    {id:'p2_3',name:'Read: Python for Finance — Yves Hilpisch',sub:'Derivatives pricing, portfolio optimisation, algo trading implementation',deadline:'Month 3–5',priority:'high',link:null},
+    {id:'p2_4',name:'Learn statsmodels: cointegration, ARIMA, OLS regression',sub:'Work through docs + run on real stock data; core to Project 2',deadline:'Month 3',priority:'high',link:'https://www.statsmodels.org'},
+    {id:'p2_5',name:'Build Project 2: Pairs Trading Strategy with Backtesting',sub:'Engle-Granger cointegration → z-score signals → vectorbt backtester → Sharpe report',deadline:'Month 3–4',priority:'high',link:null},
+    {id:'p2_6',name:'Learn PySpark fundamentals via Databricks free tier',sub:'Required for Goldman Sachs and Tier 1 bank roles',deadline:'Month 4',priority:'med',link:'https://community.cloud.databricks.com/'},
+    {id:'p2_7',name:'Build Project 3: ML Return Prediction Model',sub:'Feature engineering → XGBoost → walk-forward CV → SHAP explainability',deadline:'Month 4–5',priority:'high',link:null},
+    {id:'p2_8',name:'Read: Options, Futures & Other Derivatives — John Hull',sub:'Core financial instruments knowledge essential for any finance firm interview',deadline:'Month 4–6',priority:'med',link:null},
+    {id:'p2_9',name:'Explore awesome-quant GitHub repo',sub:'Catalogue the key libraries; add 3+ to your projects',deadline:'Month 2',priority:'low',link:'https://github.com/wilsonfreitas/awesome-quant'},
+    {id:'p2_10',name:'Complete Coursera Statistics for Finance module',sub:'Formal grounding in probability, hypothesis testing, distributions',deadline:'Month 3',priority:'med',link:'https://www.coursera.org/courses?query=quantitative+finance'},
+  ]},
+  phase3:{color:'var(--amber)',label:'P3',tasks:[
+    {id:'p3_1',name:'Build Project 4: Portfolio Optimisation Engine',sub:'PyPortfolioOpt → efficient frontier → ML-signal allocation → 10k Monte Carlo → deploy on AWS',deadline:'Month 6–8',priority:'high',link:null},
+    {id:'p3_2',name:'Integrate gs-quant library into Project 4',sub:"Goldman Sachs open-source toolkit; reference in GS cover letter",deadline:'Month 7–8',priority:'high',link:'https://github.com/goldmansachs/gs-quant'},
+    {id:'p3_3',name:'Deploy Project 4 as live Streamlit app on AWS',sub:'Public URL to include in CV and cover letters',deadline:'Month 8',priority:'high',link:null},
+    {id:'p3_4',name:'Enter a QuantConnect algorithm competition',sub:'A live public ranking is a credential no certificate can replicate',deadline:'Month 7',priority:'high',link:'https://www.quantconnect.com/'},
+    {id:'p3_5',name:'Attend a London quant networking event',sub:'QuantConf, CQF open events, WQU meetups, eFinancialCareers events',deadline:'Month 7–9',priority:'med',link:null},
+    {id:'p3_6',name:'Begin applying for Quant Developer / Quant Analyst roles',sub:'eFinancialCareers, LinkedIn, Selby Jennings, Quantica recruiters',deadline:'Month 9',priority:'high',link:null},
+    {id:'p3_7',name:'Write up all 4 projects with detailed READMEs',sub:'Include methodology, results, limitations, and what you learned',deadline:'Month 8',priority:'med',link:null},
+    {id:'p3_8',name:'Review quant-trading GitHub for strategy inspiration',sub:'30+ documented strategies; adapt one as a 5th project or QuantConnect entry',deadline:'Month 6',priority:'low',link:'https://github.com/je-suis-tm/quant-trading'},
+  ]},
+  phase4:{color:'var(--red)',label:'P4',tasks:[
+    {id:'p4_1',name:'Begin CQF — Certificate in Quantitative Finance',sub:"6-month part-time, master's-level. ~£15k. Seek employer sponsorship.",deadline:'Month 10',priority:'optional',link:'https://www.cqf.com/'},
+    {id:'p4_2',name:'Alternative: Coursera Financial Engineering Specialisation',sub:'Lower-cost formal credential if CQF is not feasible yet',deadline:'Month 10',priority:'optional',link:'https://www.coursera.org/courses?query=financial+engineering'},
+    {id:'p4_3',name:'Prepare for quant developer interview loop',sub:"Heard on the Street (brainteasers), Python/algo LeetCode, stats Q&A, probability puzzles",deadline:'Month 11–12',priority:'high',link:null},
+    {id:'p4_4',name:'Target internal quant transfer (if at a finance firm)',sub:'Leverage 12 months of domain knowledge, project portfolio, and internal relationships',deadline:'Month 12',priority:'high',link:null},
+    {id:'p4_5',name:'Begin learning stochastic calculus basics',sub:"Brownian motion, Ito's lemma — needed for senior quant research roles",deadline:'Month 11–12',priority:'med',link:null},
+    {id:'p4_6',name:'Book 3-month review checkpoint',sub:'Assess: applications sent, rejections, feedback patterns, study progress vs plan',deadline:'Month 3',priority:'med',link:null},
+  ]},
+};
+
+const PROJECTS=[
+  {num:1,cls:'pc1',sc:'s-pc1',color:'var(--blue)',bg:'var(--blue-bg)',title:'Financial Risk Pipeline & Dashboard',timing:'Months 1–3',diff:'Beginner',dur:'2–3 weeks',desc:'Pull 5 years OHLCV data, store in DB, compute rolling volatility, Sharpe, VaR, drawdown. Visualise in Plotly Dash.',libs:['yfinance','pandas/numpy','plotly/dash','statsmodels','SQLite'],steps:['Pull OHLCV data for 20 stocks via yfinance; store in SQLite','Compute: 30-day rolling vol, Sharpe, 95% VaR, max drawdown','Build Plotly Dash dashboard with sortable metrics','AWS Lambda daily refresh'],taskIds:['p1_8']},
+  {num:2,cls:'pc2',sc:'s-pc2',color:'var(--teal)',bg:'var(--teal-bg)',title:'Pairs Trading Strategy + Backtester',timing:'Months 3–4',diff:'Intermediate',dur:'3–4 weeks',desc:'Screen for cointegrated pairs, implement z-score entry/exit rules, run vectorised backtester with transaction costs.',libs:['statsmodels','vectorbt','pandas/numpy','matplotlib'],steps:['Screen pairs with Engle-Granger cointegration test','Compute spread z-score; entry ±2σ, exit at 0','Vectorised P&L backtester with 5bps/trade costs','Report: Sharpe, drawdown, win rate, equity curve'],taskIds:['p2_5']},
+  {num:3,cls:'pc3',sc:'s-pc3',color:'var(--amber)',bg:'var(--amber-bg)',title:'ML Return Prediction Model',timing:'Months 4–5',diff:'Intermediate',dur:'3–4 weeks',desc:'Predict next-day return direction. XGBoost with walk-forward CV. SHAP for regulatory-grade explainability.',libs:['scikit-learn','xgboost','shap','ta-lib','pandas'],steps:['Engineer features: momentum, RSI, rolling vol, volume z-score','XGBoost with walk-forward (not random) CV','SHAP feature importance plots for explainability','Honest reporting: 52% accuracy + positive Sharpe = good'],taskIds:['p2_7']},
+  {num:4,cls:'pc4',sc:'s-pc4',color:'var(--red)',bg:'var(--red-bg)',title:'Portfolio Optimisation Engine',timing:'Months 6–8',diff:'Advanced',dur:'4–6 weeks',desc:'Markowitz mean-variance + ML signal from Project 3. 10k Monte Carlo. Deploy as live Streamlit app.',libs:['PyPortfolioOpt','cvxpy','gs-quant','streamlit','numpy'],steps:['Efficient frontier + max Sharpe + min-vol portfolios','Feed ML signal as expected return estimates','10,000-run Monte Carlo to validate frontier','Deploy Streamlit app on AWS — include live URL in CV'],taskIds:['p3_1','p3_2','p3_3']},
+];
+
+const RESOURCES=[
+  {type:'Course',name:'Udemy — Quant Finance & Algo Trading in Python',url:'https://www.udemy.com/course/quantitative-finance-algorithmic-trading-in-python/',desc:'204 lectures. CAPM, Black-Scholes, Monte Carlo, VaR. Updated March 2026.'},
+  {type:'Course',name:'DataCamp — Python for Finance',url:'https://www.datacamp.com/courses/introduction-to-python-for-finance',desc:'Close the applied Python gap fast. NumPy, Matplotlib, financial data.'},
+  {type:'Free Guide',name:'QuantStart — Self-Study Plan I & II',url:'https://www.quantstart.com/articles/Self-Study-Plan-for-Becoming-a-Quantitative-Trader-Part-I/',desc:'Comprehensive free roadmap: stats, econometrics, time-series, ML.'},
+  {type:'Book',name:'Python for Finance — Yves Hilpisch',url:'https://www.oreilly.com/library/view/python-for-finance/9781492024323/',desc:'The definitive quant Python textbook.'},
+  {type:'Book',name:'Options, Futures & Other Derivatives — Hull',url:'https://www.amazon.co.uk/Options-Futures-Other-Derivatives-Global/dp/1292410655',desc:'Essential financial instruments knowledge for finance firm interviews.'},
+  {type:'Newsletter',name:'PyQuant News',url:'https://www.pyquantnews.com/',desc:'Free weekly Python quant newsletter. 134-lesson course, 40 code templates.'},
+  {type:'GitHub',name:'awesome-quant — wilsonfreitas',url:'https://github.com/wilsonfreitas/awesome-quant',desc:'Master reference of every quant Python library.'},
+  {type:'GitHub',name:'gs-quant — Goldman Sachs',url:'https://github.com/goldmansachs/gs-quant',desc:"Goldman's open-source quant toolkit. Use in Project 4; reference in GS cover letter."},
+  {type:'GitHub',name:'quant-trading — je-suis-tm',url:'https://github.com/je-suis-tm/quant-trading',desc:'30+ documented strategy examples: pairs, Monte Carlo, Bollinger Bands.'},
+  {type:'Platform',name:'QuantConnect',url:'https://www.quantconnect.com/',desc:'Live algo trading competitions. A public ranking is a strong credential.'},
+  {type:'Credential',name:'CQF — Certificate in Quantitative Finance',url:'https://www.cqf.com/',desc:"Master's-level, 6-month part-time. ~£15k. Best quant credential in London."},
+  {type:'Platform',name:'Coursera — Financial Engineering',url:'https://www.coursera.org/courses?query=financial+engineering',desc:'Lower-cost alternative to CQF.'},
+];
+
+const ROLES=[
+  {role:'Data Engineer, Lakehouse & AI Platform',co:'Goldman Sachs',match:'Very strong',mc:'var(--teal)',sal:'Competitive',pri:'Apply now',link:'https://to.indeed.com/aapdv9kzcgtx'},
+  {role:'Data Engineer',co:'Aventum Group',match:'Very strong',mc:'var(--teal)',sal:'Not listed',pri:'Apply now',link:'https://to.indeed.com/aasbhpmkwvtn'},
+  {role:'Data Scientist, Credit Risk',co:'InFact',match:'Strong',mc:'var(--blue)',sal:'£60–90k',pri:'Apply now',link:'https://to.indeed.com/aapxxtb4j7zy'},
+  {role:'Data Analyst (quant sports)',co:'Smartodds',match:'Good stretch',mc:'var(--amber)',sal:'Not listed',pri:'Month 2',link:'https://to.indeed.com/aarztk7wg9xh'},
+  {role:'Quant Developer',co:'Hedge funds / banks',match:'6–12 months',mc:'var(--purple)',sal:'£80–130k+',pri:'Phase 3',link:null},
+  {role:'Quantitative Analyst',co:'Asset managers',match:'12–24 months',mc:'var(--muted)',sal:'£100k+',pri:'Phase 4',link:null},
+];
+
+const TIMELINE=[
+  {month:'Month 1',color:'var(--blue)',items:[{l:'Apply: Goldman Sachs',c:'var(--blue)'},{l:'Apply: Aventum',c:'var(--blue)'},{l:'Apply: InFact',c:'var(--blue)'},{l:'GitHub setup',c:'var(--teal)'},{l:'DataCamp Python for Finance',c:'var(--amber)'}]},
+  {month:'Month 2–3',color:'var(--blue)',items:[{l:'Project 1: Risk Dashboard',c:'var(--blue)'},{l:'QuantStart Study Plan',c:'var(--amber)'},{l:'Udemy Quant Course',c:'var(--amber)'},{l:'statsmodels practice',c:'var(--teal)'}]},
+  {month:'Month 3–4',color:'var(--teal)',items:[{l:'Project 2: Pairs Trading',c:'var(--teal)'},{l:'PySpark / Databricks',c:'var(--teal)'},{l:'Python for Finance book',c:'var(--amber)'}]},
+  {month:'Month 4–5',color:'var(--teal)',items:[{l:'Project 3: ML Model',c:'var(--amber)'},{l:'SHAP + walk-forward CV',c:'var(--amber)'},{l:'John Hull book',c:'var(--purple)'}]},
+  {month:'Month 6–8',color:'var(--amber)',items:[{l:'Project 4: Portfolio Engine',c:'var(--red)'},{l:'gs-quant integration',c:'var(--red)'},{l:'Deploy Streamlit on AWS',c:'var(--teal)'},{l:'QuantConnect competition',c:'var(--amber)'}]},
+  {month:'Month 9',color:'var(--amber)',items:[{l:'Target Quant Dev roles',c:'var(--blue)'},{l:'Networking events',c:'var(--purple)'},{l:'Portfolio READMEs',c:'var(--teal)'}]},
+  {month:'Month 10–12',color:'var(--red)',items:[{l:'CQF enrolment',c:'var(--red)'},{l:'Interview prep',c:'var(--blue)'},{l:'Target quant role / transfer',c:'var(--green)'}]},
+];
+
+// ═══════════════════════════════════════════════
+// STATE — in-memory cache, single localStorage write
+// ═══════════════════════════════════════════════
+let _state = {};
+function loadState(){try{_state=JSON.parse(localStorage.getItem('ks_v2'))||{};}catch(e){_state={};}}
+function saveState(){try{localStorage.setItem('ks_v2',JSON.stringify(_state));}catch(e){}}
+loadState();
+
+function getStatuses(){return _state.statuses||{};}
+function getNotes(){return _state.notes||{};}
+function getHistory(){return _state.history||[];}
+function getCustomTasks(){return _state.customTasks||{};}
+
+// PHASES = builtin merged with custom tasks
+function getPHASES(){
+  const custom=getCustomTasks();
+  const result={};
+  for(const[pid,phase] of Object.entries(BUILTIN_PHASES)){
+    const extra=(custom[pid]||[]);
+    result[pid]={...phase,tasks:[...phase.tasks,...extra]};
+  }
+  return result;
+}
+
+function allTasks(){return Object.values(getPHASES()).flatMap(p=>p.tasks);}
+function phaseOf(tid){for(const[k,p] of Object.entries(getPHASES()))if(p.tasks.find(t=>t.id===tid))return k;return null;}
+function isCustom(tid){const ct=getCustomTasks();return Object.values(ct).flat().some(t=>t.id===tid);}
+
+const STATUS_CYCLE={todo:'inprog',inprog:'done',done:'todo'};
+const STATUS_LABELS={todo:'To Do',inprog:'In Progress',done:'Done'};
+const STATUS_CSS={todo:'s-todo',inprog:'s-inprog',done:'s-done'};
+const STATUS_COLORS={todo:'#9ca3af',inprog:'#fbbf24',done:'#4ade80'};
+
+function setStatus(taskId,newStatus,skipHistory){
+  const tid=taskId||_pendingTaskId;
+  const statuses=_state.statuses||{};
+  const history=_state.history||[];
+  const oldStatus=statuses[tid]||'todo';
+  if(oldStatus===newStatus)return;
+  statuses[tid]=newStatus;
+  if(!skipHistory){
+    history.unshift({taskId:tid,from:oldStatus,to:newStatus,ts:Date.now()});
+    if(history.length>500)history.length=500;
+  }
+  _state.statuses=statuses;_state.history=history;
+  const today=new Date().toDateString();
+  if(newStatus==='done'){
+    if(_state.lastDate!==today){
+      _state.streak=(_state.lastDate===new Date(Date.now()-86400000).toDateString())?(_state.streak||0)+1:1;
+      _state.lastDate=today;
+    }
+    const sk='ks_sess_'+today;
+    localStorage.setItem(sk,(parseInt(localStorage.getItem(sk)||'0')+1).toString());
+  }
+  saveState();
+  _pendingTaskId=null;
+  if(newStatus==='done'){spawnConfetti();showToast(randomMsg());}
+  renderAfterStatusChange(tid);
+  closeWf();
+}
+
+function revertHistory(idx){
+  const h=getHistory()[idx];if(!h)return;
+  setStatus(h.taskId,h.from,true);
+  showToast('Reverted to '+STATUS_LABELS[h.from]);
+}
+
+// ═══════════════════════════════════════════════
+// TARGETED RENDER — only update what changed
+// ═══════════════════════════════════════════════
+let _currentSection='dashboard';
+
+function renderAfterStatusChange(tid){
+  const pid=phaseOf(tid);
+  // update the active table if it's the right phase
+  const activeEl=document.querySelector('.section.visible');
+  const activeId=activeEl?activeEl.id.replace('sec-',''):'';
+  if(activeId===pid) renderTable('tt-'+pid,pid);
+  else if(activeId==='kanban') renderKanban();
+  else if(activeId==='history') renderHistory();
+  else if(activeId==='dashboard') renderDashboard();
+  // always update metrics bar & sidebar counts
+  updateMetrics();
+}
+
+// ═══════════════════════════════════════════════
+// ADD / EDIT / DELETE CUSTOM TASKS
+// ═══════════════════════════════════════════════
+let _editingTaskId=null;
+
+function openAddModal(phaseId){
+  _editingTaskId=null;
+  document.getElementById('modal-title').textContent='Add New Task';
+  document.getElementById('modal-sub').textContent='Custom tasks are saved locally and marked with a "custom" badge.';
+  document.getElementById('f-name').value='';
+  document.getElementById('f-sub').value='';
+  document.getElementById('f-phase').value=phaseId||'phase1';
+  document.getElementById('f-priority').value='med';
+  document.getElementById('f-deadline').value='';
+  document.getElementById('f-status').value='todo';
+  document.getElementById('f-link').value='';
+  document.getElementById('e-name').classList.remove('show');
+  document.getElementById('modal-delete-btn').style.display='none';
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(()=>document.getElementById('f-name').focus(),200);
+}
+
+function openEditModal(taskId){
+  const task=allTasks().find(t=>t.id===taskId);if(!task||!isCustom(taskId))return;
+  _editingTaskId=taskId;
+  const status=getStatuses()[taskId]||'todo';
+  document.getElementById('modal-title').textContent='Edit Task';
+  document.getElementById('modal-sub').textContent='Update the task details below.';
+  document.getElementById('f-name').value=task.name;
+  document.getElementById('f-sub').value=task.sub||'';
+  document.getElementById('f-phase').value=phaseOf(taskId);
+  document.getElementById('f-priority').value=task.priority||'med';
+  document.getElementById('f-deadline').value=task.deadline||'';
+  document.getElementById('f-status').value=status;
+  document.getElementById('f-link').value=task.link||'';
+  document.getElementById('e-name').classList.remove('show');
+  document.getElementById('modal-delete-btn').style.display='block';
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(()=>document.getElementById('f-name').focus(),200);
+}
+
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');}
+function handleOverlayClick(e){if(e.target===document.getElementById('modal-overlay'))closeModal();}
+
+function saveTask(){
+  const name=document.getElementById('f-name').value.trim();
+  if(!name){document.getElementById('e-name').classList.add('show');document.getElementById('f-name').focus();return;}
+  document.getElementById('e-name').classList.remove('show');
+
+  const phaseId=document.getElementById('f-phase').value;
+  const priority=document.getElementById('f-priority').value;
+  const deadline=document.getElementById('f-deadline').value.trim()||'—';
+  const sub=document.getElementById('f-sub').value.trim();
+  const link=document.getElementById('f-link').value.trim()||null;
+  const status=document.getElementById('f-status').value;
+
+  const ct=getCustomTasks();
+
+  if(_editingTaskId){
+    // Edit existing
+    for(const[pid,tasks] of Object.entries(ct)){
+      const idx=tasks.findIndex(t=>t.id===_editingTaskId);
+      if(idx>-1){
+        const newPhase=phaseId;
+        tasks.splice(idx,1);
+        _state.customTasks=ct;
+        if(!ct[newPhase])ct[newPhase]=[];
+        const updated={id:_editingTaskId,name,sub,deadline,priority,link,custom:true};
+        ct[newPhase].push(updated);
+        break;
+      }
+    }
+  } else {
+    // New task
+    const id='c_'+Date.now();
+    if(!ct[phaseId])ct[phaseId]=[];
+    ct[phaseId].push({id,name,sub,deadline,priority,link,custom:true});
+    // set status
+    const statuses=_state.statuses||{};
+    statuses[id]=status;
+    _state.statuses=statuses;
+    // log creation
+    const history=_state.history||[];
+    history.unshift({taskId:id,from:'created',to:status,ts:Date.now(),note:'Task created'});
+    _state.history=history;
+  }
+
+  _state.customTasks=ct;
+  saveState();
+  closeModal();
+  renderAll();
+  showToast(_editingTaskId?'Task updated.':'Task added to '+phaseId.replace('phase','Phase ')+'.');
+}
+
+function deleteTask(){
+  if(!_editingTaskId)return;
+  if(!confirm('Delete this task? This cannot be undone.'))return;
+  const ct=getCustomTasks();
+  for(const[pid,tasks] of Object.entries(ct)){
+    const idx=tasks.findIndex(t=>t.id===_editingTaskId);
+    if(idx>-1){tasks.splice(idx,1);break;}
+  }
+  // clean up status + notes
+  delete(_state.statuses||{})[_editingTaskId];
+  delete(_state.notes||{})[_editingTaskId];
+  _state.customTasks=ct;
+  saveState();
+  closeModal();
+  renderAll();
+  showToast('Task deleted.');
+}
+
+// ═══════════════════════════════════════════════
+// WORKFLOW DROPDOWN
+// ═══════════════════════════════════════════════
+let _pendingTaskId=null;
+function openWf(taskId,el,e){
+  e&&e.stopPropagation();
+  _pendingTaskId=taskId;
+  const d=document.getElementById('wf-dropdown');
+  const r=el.getBoundingClientRect();
+  d.style.display='block';
+  d.style.left=Math.min(r.left,window.innerWidth-150)+'px';
+  d.style.top=(r.bottom+4)+'px';
+  d.querySelectorAll('.wf-opt').forEach((o,i)=>{
+    const map=['todo','inprog','done'];
+    o.classList.toggle('active',(getStatuses()[taskId]||'todo')===map[i]);
+  });
+}
+function closeWf(){document.getElementById('wf-dropdown').style.display='none';_pendingTaskId=null;}
+document.addEventListener('click',e=>{if(!e.target.closest('#wf-dropdown')&&!e.target.closest('.status-pill'))closeWf();});
+
+// ═══════════════════════════════════════════════
+// SEARCH
+// ═══════════════════════════════════════════════
+let _searchFocusIdx=-1;
+
+function onSearch(){
+  const q=document.getElementById('search-input').value.trim();
+  const clearBtn=document.getElementById('search-clear');
+  const kbdHint=document.getElementById('search-kbd');
+  clearBtn.classList.toggle('show',q.length>0);
+  kbdHint.style.display=q.length>0?'none':'block';
+  _searchFocusIdx=-1;
+  if(!q){closeSearchResults();return;}
+  runSearch(q);
+}
+
+function runSearch(q){
+  const lower=q.toLowerCase();
+  const PHASES=getPHASES();
+  const statuses=getStatuses();
+  const results=[];
+  for(const[pid,phase] of Object.entries(PHASES)){
+    for(const task of phase.tasks){
+      const nameHit=task.name.toLowerCase().includes(lower);
+      const subHit=(task.sub||'').toLowerCase().includes(lower);
+      if(nameHit||subHit){
+        results.push({task,pid,phase,nameHit,subHit,status:statuses[task.id]||'todo'});
+      }
+    }
+  }
+  renderSearchResults(results,q);
+}
+
+function highlight(str,q){
+  if(!q)return str;
+  const esc=q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  return str.replace(new RegExp(`(${esc})`,'gi'),'<mark>$1</mark>');
+}
+
+function renderSearchResults(results,q){
+  const el=document.getElementById('search-results');
+  if(results.length===0){
+    el.innerHTML=`<div class="sr-empty">No tasks matching "<strong>${q}</strong>"</div>`;
+    el.classList.add('open');return;
+  }
+  el.innerHTML=`<div class="sr-header">${results.length} result${results.length!==1?'s':''} for "${q}"</div>`+
+    results.map((r,i)=>`
+      <div class="sr-item" data-tid="${r.task.id}" onclick="searchGoTo('${r.task.id}')" tabindex="-1">
+        <div class="sr-dot" style="background:${STATUS_COLORS[r.status]}"></div>
+        <div class="sr-body">
+          <div class="sr-name">${highlight(r.task.name,q)}</div>
+          <div class="sr-sub">${r.subHit?highlight((r.task.sub||''),q):(r.task.sub||'')}</div>
+        </div>
+        <div class="sr-meta">
+          <span style="font-size:9px;color:${r.phase.color};background:var(--bg4);padding:1px 5px;border-radius:3px;">${r.phase.label}</span>
+          <span class="status-pill ${STATUS_CSS[r.status]}" style="font-size:9px;padding:1px 5px;" onclick="openWf('${r.task.id}',this,event)">${STATUS_LABELS[r.status]} ▾</span>
+        </div>
+      </div>`).join('');
+  el.classList.add('open');
+}
+
+function searchGoTo(tid){
+  clearSearch();
+  const pid=phaseOf(tid);
+  if(pid){nav(pid);setTimeout(()=>highlightTaskRow(tid),100);}
+}
+
+function highlightTaskRow(tid){
+  const row=document.querySelector(`[data-tid="${tid}"]`);
+  if(row){row.scrollIntoView({behavior:'smooth',block:'center'});row.style.background='var(--blue-bg)';setTimeout(()=>{row.style.background='';},1500);}
+}
+
+function searchKeyNav(e){
+  const el=document.getElementById('search-results');
+  const items=el.querySelectorAll('.sr-item');
+  if(e.key==='ArrowDown'){e.preventDefault();_searchFocusIdx=Math.min(_searchFocusIdx+1,items.length-1);items[_searchFocusIdx]?.classList.add('focused');items[_searchFocusIdx-1]?.classList.remove('focused');}
+  else if(e.key==='ArrowUp'){e.preventDefault();_searchFocusIdx=Math.max(_searchFocusIdx-1,0);items[_searchFocusIdx]?.classList.add('focused');items[_searchFocusIdx+1]?.classList.remove('focused');}
+  else if(e.key==='Enter'&&_searchFocusIdx>=0){const tid=items[_searchFocusIdx]?.dataset.tid;if(tid)searchGoTo(tid);}
+  else if(e.key==='Escape'){clearSearch();}
+}
+
+function clearSearch(){
+  document.getElementById('search-input').value='';
+  document.getElementById('search-clear').classList.remove('show');
+  document.getElementById('search-kbd').style.display='block';
+  closeSearchResults();
+  _searchFocusIdx=-1;
+}
+function closeSearchResults(){document.getElementById('search-results').classList.remove('open');}
+document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))closeSearchResults();});
+
+// / key to focus search
+document.addEventListener('keydown',e=>{
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){
+    e.preventDefault();document.getElementById('search-input').focus();
+  }
+  if(e.key==='Escape'){closeModal();clearSearch();}
+});
+
+// ═══════════════════════════════════════════════
+// RENDER HELPERS
+// ═══════════════════════════════════════════════
+function pbadge(p){
+  const m={urgent:'p-urgent',high:'p-high',med:'p-med',low:'p-low',optional:'p-opt'};
+  const l={urgent:'URGENT',high:'HIGH',med:'MED',low:'LOW',optional:'OPT'};
+  return`<span class="pb ${m[p]||'p-low'}">${l[p]||p}</span>`;
+}
+
+function phaseProg(pid){
+  const s=getStatuses();const tasks=(getPHASES()[pid]||{tasks:[]}).tasks;
+  const done=tasks.filter(t=>s[t.id]==='done').length;
+  const inprog=tasks.filter(t=>s[t.id]==='inprog').length;
+  return{done,inprog,total:tasks.length,pct:tasks.length?Math.round(done/tasks.length*100):0};
+}
+function totalProg(){
+  const s=getStatuses();const tasks=allTasks();
+  const done=tasks.filter(t=>s[t.id]==='done').length;
+  const inprog=tasks.filter(t=>s[t.id]==='inprog').length;
+  const todo=tasks.filter(t=>!s[t.id]||s[t.id]==='todo').length;
+  return{done,inprog,todo,total:tasks.length,pct:tasks.length?Math.round(done/tasks.length*100):0};
+}
+
+// ═══════════════════════════════════════════════
+// RENDER PHASE TABLE
+// ═══════════════════════════════════════════════
+function renderTable(tblId,phaseId){
+  const tbl=document.getElementById(tblId);if(!tbl)return;
+  const PHASES=getPHASES();
+  const tasks=PHASES[phaseId].tasks;
+  const statuses=getStatuses();const notes=getNotes();
+  tbl.innerHTML=`<thead><tr>
+    <th style="width:26px"></th>
+    <th>Task</th>
+    <th style="width:90px">Deadline</th>
+    <th style="width:70px">Priority</th>
+    <th style="width:110px">Status</th>
+    <th style="width:80px">Actions</th>
+  </tr></thead><tbody id="${tblId}_b"></tbody>`;
+  const tbody=document.getElementById(tblId+'_b');
+  tasks.forEach(task=>{
+    const st=statuses[task.id]||'todo';
+    const note=notes[task.id]||'';
+    const dlColor=task.deadline&&task.deadline.includes('Week 1')?'color:var(--red);font-weight:700;':'';
+    const custom=isCustom(task.id);
+    const tr=document.createElement('tr');
+    tr.className=`tr st-${st}${custom?' custom-task':''}`;tr.dataset.tid=task.id;
+    tr.innerHTML=`
+      <td class="tc" style="width:26px;padding-top:11px;">
+        <div style="width:10px;height:10px;border-radius:50%;background:${STATUS_COLORS[st]};cursor:pointer;transition:background .2s;" onclick="cycleStatus('${task.id}',event)" title="Click to advance status"></div>
+      </td>
+      <td class="tc">
+        <div class="tn">${task.name}${task.link?` <a href="${task.link}" target="_blank" style="color:var(--blue);font-size:9px;margin-left:3px;text-decoration:none" onclick="event.stopPropagation()">↗</a>`:''}</div>
+        ${task.sub?`<div class="tsb">${task.sub}</div>`:''}
+      </td>
+      <td class="tc"><div class="tdl" style="${dlColor}">${task.deadline||'—'}</div></td>
+      <td class="tc">${pbadge(task.priority||'med')}</td>
+      <td class="tc"><span class="status-pill ${STATUS_CSS[st]}" onclick="openWf('${task.id}',this,event)">${STATUS_LABELS[st]} ▾</span></td>
+      <td class="tc" style="display:flex;gap:6px;align-items:center;padding-top:10px;">
+        <button class="nexpbtn" onclick="toggleNotes('${task.id}',event)">${note?'✎':'+ note'}</button>
+        ${custom?`<button class="del-btn" onclick="openEditModal('${task.id}');event.stopPropagation()" title="Edit task">✎ edit</button>`:''}
+      </td>`;
+    tbody.appendChild(tr);
+    const nr=document.createElement('tr');
+    const nd=document.createElement('td');nd.colSpan=6;nd.style.padding='0';
+    nd.innerHTML=`<div class="nwrap" id="nw_${task.id}"><div class="nlbl">NOTES</div><textarea class="ntxt" placeholder="Add notes, links, progress…" rows="2" oninput="saveNote('${task.id}',this.value)">${note}</textarea></div>`;
+    nr.appendChild(nd);tbody.appendChild(nr);
+  });
+}
+
+function cycleStatus(tid,e){e&&e.stopPropagation();const cur=getStatuses()[tid]||'todo';setStatus(tid,STATUS_CYCLE[cur]);}
+function toggleNotes(tid,e){e&&e.stopPropagation();const w=document.getElementById('nw_'+tid);if(w){w.classList.toggle('open');const btn=w.closest('tr').previousSibling.querySelector('.nexpbtn');if(btn)btn.textContent=w.classList.contains('open')?'▲':(getNotes()[tid]?'✎':'+ note');}}
+function saveNote(tid,val){if(!_state.notes)_state.notes={};_state.notes[tid]=val;saveState();}
+
+// ═══════════════════════════════════════════════
+// KANBAN
+// ═══════════════════════════════════════════════
+let _dragId=null;
+function renderKanban(){
+  const board=document.getElementById('kanban-board');if(!board)return;
+  const PHASES=getPHASES();
+  const statuses=getStatuses();
+  const filterPhase=document.getElementById('kb-filter-phase')?.value||'';
+  const cols={todo:[],inprog:[],done:[]};
+  Object.entries(PHASES).forEach(([pid,phase])=>{
+    if(filterPhase&&pid!==filterPhase)return;
+    phase.tasks.forEach(t=>{
+      const st=statuses[t.id]||'todo';
+      cols[st].push({...t,phaseId:pid,phaseLabel:phase.label,phaseColor:phase.color});
+    });
+  });
+  const colDefs=[
+    {key:'todo',label:'To Do',color:'#9ca3af',hdrBg:'rgba(107,114,128,.1)'},
+    {key:'inprog',label:'In Progress',color:'#fbbf24',hdrBg:'rgba(245,158,11,.1)'},
+    {key:'done',label:'Done',color:'#4ade80',hdrBg:'rgba(34,197,94,.1)'},
+  ];
+  board.innerHTML=colDefs.map(col=>`
+    <div class="kb-col" id="kbc-${col.key}" ondragover="kbDragOver(event,'${col.key}')" ondrop="kbDrop(event,'${col.key}')" ondragleave="kbDragLeave(event)">
+      <div class="kb-col-hdr" style="background:${col.hdrBg}">
+        <span class="kb-col-title" style="color:${col.color}">${col.label}</span>
+        <span class="kb-count">${cols[col.key].length}</span>
+      </div>
+      <div class="kb-body" id="kb-${col.key}">
+        ${cols[col.key].length===0?`<div class="kb-drag-hint">Drop here</div>`:''}
+        ${cols[col.key].map(t=>`
+          <div class="kb-card" draggable="true" data-tid="${t.id}" id="kbc_${t.id}"
+            ondragstart="kbDragStart(event,'${t.id}')" ondragend="kbDragEnd(event)">
+            <div class="kb-cname">${t.name}${isCustom(t.id)?` <span style="font-size:8px;background:var(--purple-bg);color:var(--purple);border-radius:3px;padding:0 4px;">custom</span>`:''}</div>
+            <div class="tsb" style="font-size:10px;margin-bottom:4px;">${(t.sub||'').substring(0,65)}${(t.sub||'').length>65?'…':''}</div>
+            <div class="kb-cmeta">
+              <span class="kb-phase" style="color:${t.phaseColor}">${t.phaseLabel}</span>
+              ${pbadge(t.priority||'med')}
+              <span class="status-pill ${STATUS_CSS[statuses[t.id]||'todo']}" style="font-size:9px;padding:1px 5px;" onclick="openWf('${t.id}',this,event)">${STATUS_LABELS[statuses[t.id]||'todo']} ▾</span>
+              ${isCustom(t.id)?`<button style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:10px;padding:0;" onclick="openEditModal('${t.id}')" title="Edit">✎</button>`:''}
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function kbDragStart(e,tid){_dragId=tid;setTimeout(()=>{const el=document.getElementById('kbc_'+tid);if(el)el.classList.add('dragging');},0);}
+function kbDragEnd(){document.querySelectorAll('.kb-card').forEach(c=>c.classList.remove('dragging'));document.querySelectorAll('.kb-col').forEach(c=>c.classList.remove('drop-target'));_dragId=null;}
+function kbDragOver(e,col){e.preventDefault();document.getElementById('kbc-'+col)?.classList.add('drop-target');}
+function kbDragLeave(e){e.currentTarget.classList.remove('drop-target');}
+function kbDrop(e,col){e.preventDefault();document.querySelectorAll('.kb-col').forEach(c=>c.classList.remove('drop-target'));if(_dragId){const cur=getStatuses()[_dragId]||'todo';if(cur!==col)setStatus(_dragId,col);}}
+
+// ═══════════════════════════════════════════════
+// HISTORY
+// ═══════════════════════════════════════════════
+let _histFilter='all';
+function filterHist(f,btn){_histFilter=f;document.querySelectorAll('.hf-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderHistory();}
+function renderHistory(){
+  const el=document.getElementById('hist-list');if(!el)return;
+  const history=getHistory();
+  const taskMap=Object.fromEntries(allTasks().map(t=>[t.id,t]));
+  const now=Date.now();const todayStr=new Date().toDateString();
+  const filtered=history.filter(h=>{
+    if(_histFilter==='done')return h.to==='done';
+    if(_histFilter==='inprog')return h.to==='inprog';
+    if(_histFilter==='todo')return h.to==='todo';
+    if(_histFilter==='today')return new Date(h.ts).toDateString()===todayStr;
+    if(_histFilter==='week')return(now-h.ts)<7*24*3600*1000;
+    return true;
+  });
+  if(filtered.length===0){el.innerHTML=`<div class="hist-empty">No activity yet. Start by moving tasks to In Progress or Done.</div>`;return;}
+  el.innerHTML=filtered.map((h,i)=>{
+    const task=taskMap[h.taskId];if(!task)return'';
+    const dt=new Date(h.ts);
+    const dateStr=dt.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+    const timeStr=dt.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+    const phaseId=phaseOf(h.taskId);
+    const phaseColor=getPHASES()[phaseId]?.color||'var(--muted)';
+    const phaseLabel=getPHASES()[phaseId]?.label||'';
+    const fromColor=h.from==='created'?'var(--purple)':(STATUS_COLORS[h.from]||'var(--muted)');
+    const fromLabel=h.from==='created'?'Created':STATUS_LABELS[h.from]||h.from;
+    const toColor=STATUS_COLORS[h.to]||'var(--muted)';
+    const arrow=`<span style="color:${fromColor}">${fromLabel}</span> → <span style="color:${toColor}">${STATUS_LABELS[h.to]||h.to}</span>`;
+    return`<div class="hist-entry">
+      <div class="hist-time">${dateStr}<br><span style="color:var(--muted)">${timeStr}</span></div>
+      <div class="hist-dot" style="background:${toColor}"></div>
+      <div class="hist-body"><div class="hist-name">${task.name}</div><div class="hist-detail">${arrow} · <span style="color:${phaseColor}">${phaseLabel}</span></div></div>
+      ${h.from!=='created'?`<button class="hist-revert" onclick="revertHistory(${i})">↩ revert</button>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════
+function renderDashboard(){
+  const phasebars=document.getElementById('dash-phasebars');
+  if(phasebars){
+    const phases=[{id:'phase1',lbl:'P1 — Apply & Foundations',c:'var(--blue)'},{id:'phase2',lbl:'P2 — Build Quant Skills',c:'var(--teal)'},{id:'phase3',lbl:'P3 — Portfolio & Competition',c:'var(--amber)'},{id:'phase4',lbl:'P4 — Credentials',c:'var(--red)'}];
+    phasebars.innerHTML=phases.map(p=>{const pg=phaseProg(p.id);return`<div style="margin-bottom:9px"><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:3px"><span>${p.lbl}</span><span style="color:${p.c};font-weight:700">${pg.pct}% (${pg.done}/${pg.total})</span></div><div class="pt" style="height:4px"><div class="pf" style="width:${pg.pct}%;background:${p.c}"></div></div></div>`;}).join('');
+  }
+  const wfs=document.getElementById('wf-summary');
+  if(wfs){
+    const tot=totalProg();
+    wfs.innerHTML=[{lbl:'To Do',val:tot.todo,c:'var(--muted)',bg:'rgba(107,114,128,.08)'},{lbl:'In Progress',val:tot.inprog,c:'var(--amber)',bg:'rgba(245,158,11,.08)'},{lbl:'Done',val:tot.done,c:'var(--green)',bg:'rgba(34,197,94,.08)'}]
+      .map(x=>`<div style="background:${x.bg};border:1px solid var(--border);border-radius:5px;padding:.9rem;text-align:center"><div style="font-size:24px;font-weight:700;color:${x.c};margin-bottom:2px">${x.val}</div><div style="font-size:10px;color:var(--muted)">${x.lbl}</div></div>`).join('');
+  }
+  const uel=document.getElementById('urgent-tasks');
+  if(uel){
+    const statuses=getStatuses();
+    const urgent=allTasks().filter(t=>(t.priority==='urgent'||t.priority==='high')&&(statuses[t.id]||'todo')!=='done').slice(0,5);
+    uel.innerHTML=urgent.map(t=>{const st=statuses[t.id]||'todo';return`<div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:9px 12px;display:flex;align-items:center;gap:10px;cursor:pointer" onclick="goToTask('${t.id}')">
+      <div style="width:9px;height:9px;border-radius:50%;background:${STATUS_COLORS[st]};flex-shrink:0;cursor:pointer;" onclick="cycleStatus('${t.id}',event)" title="Advance status"></div>
+      <div style="flex:1"><div style="font-size:11px;font-weight:500">${t.name}</div><div style="font-size:10px;color:var(--muted)">${(t.sub||'').substring(0,80)}${(t.sub||'').length>80?'…':''}</div></div>
+      <span class="status-pill ${STATUS_CSS[st]}" style="font-size:9px" onclick="openWf('${t.id}',this,event)">${STATUS_LABELS[st]} ▾</span>
+      ${pbadge(t.priority||'med')}
+    </div>`}).join('');
+  }
+  const rt=document.getElementById('roles-tbl');
+  if(rt){rt.innerHTML=ROLES.map(r=>`<tr class="tr"><td class="tc"><span style="font-weight:500">${r.role}</span></td><td class="tc" style="color:var(--muted2)">${r.co}</td><td class="tc"><span style="color:${r.mc};font-weight:600">${r.match}</span></td><td class="tc" style="color:var(--muted2)">${r.sal}</td><td class="tc">${r.link?`<a href="${r.link}" target="_blank" style="color:var(--blue);font-size:10px;text-decoration:none">${r.pri} ↗</a>`:`<span style="color:var(--muted);font-size:10px">${r.pri}</span>`}</td></tr>`).join('');}
+}
+
+function renderProjects(){
+  const g=document.getElementById('proj-grid');if(!g)return;
+  const statuses=getStatuses();
+  g.innerHTML=PROJECTS.map(p=>{
+    const rel=allTasks().filter(t=>p.taskIds.includes(t.id));
+    const done=rel.filter(t=>statuses[t.id]==='done').length;
+    const pct=rel.length?Math.round(done/rel.length*100):0;
+    return`<div class="pcard ${p.cls}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px"><div><div class="pc-ttl">Project ${p.num} — ${p.title}</div><div class="pc-sub">${p.timing} · ${p.dur}</div></div><span style="font-size:9px;padding:2px 6px;border-radius:3px;background:${p.bg};color:${p.color};font-weight:700">${p.diff}</span></div>
+      <div class="pc-tags">${p.libs.map(l=>`<span class="pc-tag">${l}</span>`).join('')}</div>
+      <div class="pc-desc">${p.desc}</div>
+      <div class="pc-steps">${p.steps.map((s,i)=>`<div class="pc-step"><div class="pc-sn ${p.sc}">${i+1}</div><div>${s}</div></div>`).join('')}</div>
+      <div class="pc-prog-lbl"><span>Task progress</span><span style="color:${p.color}">${pct}%</span></div>
+      <div class="pc-pt"><div class="pc-pf" style="width:${pct}%;background:${p.color}"></div></div>
+    </div>`;}).join('');
+}
+
+function renderResources(){
+  const g=document.getElementById('res-grid');if(!g)return;
+  g.innerHTML=RESOURCES.map(r=>`<div class="rc"><div class="rt">${r.type}</div><div class="rn"><a href="${r.url}" target="_blank">${r.name}</a></div><div class="rd">${r.desc}</div></div>`).join('');
+}
+
+function renderTimeline(){
+  const el=document.getElementById('tl-view');if(!el)return;
+  el.innerHTML=TIMELINE.map(m=>`<div class="tl-item"><div class="tl-dot" style="background:${m.color}"></div><div class="tl-m">${m.month}</div><div class="tl-chips">${m.items.map(i=>`<span class="tl-chip" style="background:color-mix(in srgb,${i.c} 12%,transparent);border-color:color-mix(in srgb,${i.c} 35%,transparent);color:${i.c}">${i.l}</span>`).join('')}</div></div>`).join('');
+}
+
+// ═══════════════════════════════════════════════
+// METRICS
+// ═══════════════════════════════════════════════
+function updateMetrics(){
+  const tot=totalProg();
+  document.getElementById('m-total').textContent=tot.pct+'%';
+  document.getElementById('m-done').textContent=tot.done;
+  document.getElementById('m-inprog').textContent=tot.inprog;
+  document.getElementById('m-todo').textContent=tot.todo;
+  document.getElementById('mfill').style.width=tot.pct+'%';
+  document.getElementById('mpct').textContent=tot.pct+'%';
+  const streak=_state.streak||0;
+  document.getElementById('m-streak').textContent=streak;
+  document.getElementById('d-streak').textContent=streak+(streak===1?' day':' days');
+  const phases=['phase1','phase2','phase3','phase4'],labels=['P1','P2','P3','P4'];
+  let cp=0;for(let i=0;i<phases.length;i++){if(phaseProg(phases[i]).pct<100){cp=i;break;}}
+  document.getElementById('m-phase').textContent=labels[cp];
+  for(let n=1;n<=4;n++){
+    const p=phaseProg('phase'+n);
+    const f=document.getElementById('p'+n+'fil'),pc=document.getElementById('p'+n+'pct'),np=document.getElementById('np'+n);
+    if(f)f.style.width=p.pct+'%';if(pc)pc.textContent=p.pct+'%';if(np)np.textContent=p.pct+'%';
+  }
+  const sk='ks_sess_'+new Date().toDateString();
+  document.getElementById('d-done').textContent=parseInt(localStorage.getItem(sk)||'0');
+  const statuses=getStatuses();
+  const next=allTasks().find(t=>(statuses[t.id]||'todo')!=='done'&&(t.priority==='urgent'||t.priority==='high'));
+  const nel=document.getElementById('d-next');
+  if(nel&&next)nel.textContent=next.name.substring(0,42)+(next.name.length>42?'…':'');
+}
+
+// ═══════════════════════════════════════════════
+// RENDER ALL (used on init + after add/delete)
+// ═══════════════════════════════════════════════
+function renderAll(){
+  renderTable('tt-phase1','phase1');
+  renderTable('tt-phase2','phase2');
+  renderTable('tt-phase3','phase3');
+  renderTable('tt-phase4','phase4');
+  renderKanban();
+  renderHistory();
+  renderDashboard();
+  renderProjects();
+  renderResources();
+  renderTimeline();
+  updateMetrics();
+}
+
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function nav(name){
+  _currentSection=name;
+  document.querySelectorAll('.section').forEach(el=>el.classList.remove('visible'));
+  const t=document.getElementById('sec-'+name);if(t)t.classList.add('visible');
+  document.querySelectorAll('.ni').forEach(el=>el.classList.toggle('active',el.dataset.s===name));
+  // lazy render for sections that only need update when visited
+  if(name==='history')renderHistory();
+  if(name==='kanban')renderKanban();
+}
+
+function goToTask(tid){const pid=phaseOf(tid);if(pid)nav(pid);}
+
+// ═══════════════════════════════════════════════
+// RESET
+// ═══════════════════════════════════════════════
+function resetAll(){
+  if(!confirm('Reset ALL progress and history? Custom tasks will be preserved.'))return;
+  _state.statuses={};_state.history=[];_state.streak=0;_state.lastDate=null;
+  saveState();renderAll();showToast('Progress reset. Custom tasks kept.');
+}
+
+// ═══════════════════════════════════════════════
+// FX
+// ═══════════════════════════════════════════════
+const CFCOLORS=['#3b82f6','#14b8a6','#f59e0b','#22c55e','#a78bfa','#ef4444'];
+function spawnConfetti(){for(let i=0;i<16;i++){const c=document.createElement('div');c.className='cf';c.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${CFCOLORS[i%CFCOLORS.length]};width:${5+Math.random()*6}px;height:${5+Math.random()*6}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-delay:${Math.random()*.4}s;animation-duration:${1.5+Math.random()}s`;document.body.appendChild(c);setTimeout(()=>c.remove(),2500);}}
+const MSGS=['Task complete. Keep going.','One down. Momentum building.','Checked off. Quant mode: on.','Progress logged.','Done. The portfolio grows.','One step closer to quant.','Ticked. Compound it.'];
+function randomMsg(){return MSGS[Math.floor(Math.random()*MSGS.length)];}
+let _toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(_toastTimer);_toastTimer=setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// CLOCK
+function tick(){const n=new Date();document.getElementById('clock').textContent=n.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'})+'  '+n.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});}
+tick();setInterval(tick,30000);
+
+// INIT — static sections only need one render
+renderAll();
+</script>
+</body>
+</html>
