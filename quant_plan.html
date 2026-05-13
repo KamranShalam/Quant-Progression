@@ -276,8 +276,19 @@ body{font-family:var(--mono);background:var(--bg);color:var(--text);min-height:1
     <div class="search-results" id="search-results"></div>
   </div>
 
-  <div id="clock" class="clock"></div>
+  <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+    <div id="sync-indicator" style="font-size:10px;color:var(--muted);font-family:var(--mono);"></div>
+    <div id="clock" class="clock"></div>
+  </div>
 </header>
+
+<div id="sync-banner" style="display:none;background:var(--blue-bg);border-bottom:1px solid var(--blue);padding:8px 1.5rem;align-items:center;gap:12px;font-size:11px;font-family:var(--mono);">
+  <span style="color:var(--blue)">⟳</span>
+  <span style="color:var(--muted2)">Enable cross-device sync:</span>
+  <input id="pat-input" type="password" placeholder="GitHub Personal Access Token (gist scope)" style="flex:1;max-width:360px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:var(--mono);font-size:11px;padding:5px 9px;outline:none;">
+  <button onclick="activatePAT()" style="background:var(--blue-bg);border:1px solid var(--blue);color:var(--blue);font-family:var(--mono);font-size:10px;padding:5px 10px;border-radius:4px;cursor:pointer;">Connect</button>
+  <button onclick="dismissSyncBanner()" style="background:none;border:none;color:var(--muted);font-family:var(--mono);font-size:10px;cursor:pointer;">Use local only</button>
+</div>
 
 <div class="mbar">
   <div class="met"><div class="mv" id="m-total" style="color:var(--blue)">0%</div><div class="ml">Overall</div></div>
@@ -312,6 +323,9 @@ body{font-family:var(--mono);background:var(--bg);color:var(--text);min-height:1
   <div style="padding:.75rem 1rem;margin-top:.5rem;">
     <button onclick="openAddModal(null)" style="width:100%;background:var(--blue-bg);border:1px solid var(--blue);color:var(--blue);font-family:var(--mono);font-size:10px;padding:6px;border-radius:4px;cursor:pointer;letter-spacing:.05em;margin-bottom:6px;">+ ADD TASK</button>
     <button onclick="resetAll()" style="width:100%;background:var(--red-bg);border:1px solid var(--red);color:var(--red);font-family:var(--mono);font-size:10px;padding:6px;border-radius:4px;cursor:pointer;letter-spacing:.05em;">RESET ALL</button>
+    <button onclick="exportState()" style="width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--muted);font-family:var(--mono);font-size:10px;padding:6px;border-radius:4px;cursor:pointer;letter-spacing:.05em;margin-top:4px;">↓ EXPORT STATE</button>
+    <button onclick="importStateFile()" style="width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--muted);font-family:var(--mono);font-size:10px;padding:6px;border-radius:4px;cursor:pointer;letter-spacing:.05em;margin-top:4px;">↑ IMPORT STATE</button>
+    <button onclick="signOutSync()" style="width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--muted);font-family:var(--mono);font-size:10px;padding:6px;border-radius:4px;cursor:pointer;letter-spacing:.05em;margin-top:4px;">⊠ SIGN OUT SYNC</button>
   </div>
 </nav>
 
@@ -592,12 +606,189 @@ const TIMELINE=[
 ];
 
 // ═══════════════════════════════════════════════
-// STATE — in-memory cache, single localStorage write
+// STATE — in-memory cache, dual-write: LocalStorage + GitHub Gist sync
 // ═══════════════════════════════════════════════
+const GIST_FILENAME = 'quant_plan_state.json';
+const PAT_KEY       = 'ks_pat';
+const LS_CACHE_KEY  = 'ks_v2';
+const GIST_ID_KEY   = 'ks_gist_id';
 let _state = {};
-function loadState(){try{_state=JSON.parse(localStorage.getItem('ks_v2'))||{};}catch(e){_state={};}}
-function saveState(){try{localStorage.setItem('ks_v2',JSON.stringify(_state));}catch(e){}}
-loadState();
+let _syncStatus = 'idle';
+let _saveTimer  = null;
+
+// PAT management
+function getPAT()       { return localStorage.getItem(PAT_KEY) || ''; }
+function savePAT(pat)   { localStorage.setItem(PAT_KEY, pat); }
+function clearPAT()     { localStorage.removeItem(PAT_KEY); localStorage.removeItem(GIST_ID_KEY); }
+function getGistId()    { return localStorage.getItem(GIST_ID_KEY) || ''; }
+function saveGistId(id) { localStorage.setItem(GIST_ID_KEY, id); }
+
+// Gist API adapter
+async function gistFetch(method, path, body) {
+  const res = await fetch('https://api.github.com' + path, {
+    method,
+    headers: {
+      'Authorization': 'token ' + getPAT(),
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json'
+    },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (!res.ok) throw new Error('GitHub API ' + res.status);
+  return res.json();
+}
+
+async function resolveGistId() {
+  let id = getGistId();
+  if (id) return id;
+  const gists = await gistFetch('GET', '/gists');
+  const match = gists.find(g => g.files && g.files[GIST_FILENAME]);
+  if (match) { saveGistId(match.id); return match.id; }
+  const created = await gistFetch('POST', '/gists', {
+    description: 'Quant Plan state (auto-managed)',
+    public: false,
+    files: { [GIST_FILENAME]: { content: JSON.stringify({}) } }
+  });
+  saveGistId(created.id);
+  return created.id;
+}
+
+async function loadStateFromGist() {
+  const gistId = await resolveGistId();
+  const data = await gistFetch('GET', '/gists/' + gistId);
+  const raw = data.files[GIST_FILENAME]?.content;
+  return raw ? JSON.parse(raw) : {};
+}
+
+async function saveStateToGist(state) {
+  const gistId = await resolveGistId();
+  await gistFetch('PATCH', '/gists/' + gistId, {
+    files: { [GIST_FILENAME]: { content: JSON.stringify(state) } }
+  });
+}
+
+// Sync status indicator
+function setSyncStatus(status) {
+  _syncStatus = status;
+  const el = document.getElementById('sync-indicator');
+  if (!el) return;
+  if (!getPAT()) { el.textContent = ''; return; }
+  const map = {
+    idle:    { text: '● synced',   color: 'var(--green)' },
+    loading: { text: '⟳ loading',  color: 'var(--blue)'  },
+    saving:  { text: '⟳ saving',   color: 'var(--blue)'  },
+    error:   { text: '✕ sync err', color: 'var(--red)'   },
+    offline: { text: '◌ offline',  color: 'var(--amber)' },
+  };
+  const s = map[status] || map.idle;
+  el.textContent = s.text;
+  el.style.color  = s.color;
+}
+
+// Sync banner
+function showSyncBanner() {
+  const banner = document.getElementById('sync-banner');
+  if (!banner) return;
+  banner.style.display = getPAT() ? 'none' : 'flex';
+}
+function dismissSyncBanner() {
+  const banner = document.getElementById('sync-banner');
+  if (banner) banner.style.display = 'none';
+}
+
+async function activatePAT() {
+  const pat = document.getElementById('pat-input').value.trim();
+  if (!pat) return;
+  savePAT(pat);
+  dismissSyncBanner();
+  setSyncStatus('loading');
+  try {
+    const remote = await loadStateFromGist();
+    if (Object.keys(remote).length === 0) {
+      await saveStateToGist(_state);
+    } else {
+      _state = remote;
+      localStorage.setItem(LS_CACHE_KEY, JSON.stringify(_state));
+      renderAll();
+    }
+    setSyncStatus('idle');
+    showToast('Sync connected. State loaded from Gist.');
+  } catch(e) {
+    setSyncStatus('error');
+    showToast('Could not connect. Check PAT has "gist" scope.');
+    clearPAT();
+    showSyncBanner();
+  }
+}
+
+function signOutSync() {
+  if (!confirm('Disconnect Gist sync? State stays in LocalStorage on this device.')) return;
+  clearPAT();
+  setSyncStatus('idle');
+  showSyncBanner();
+  showToast('Signed out of sync. LocalStorage only.');
+}
+
+// Export / Import
+function exportState() {
+  const blob = new Blob([JSON.stringify(_state, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'quant_plan_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+}
+function importStateFile() {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = '.json';
+  input.onchange = e => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        _state = JSON.parse(ev.target.result);
+        saveState();
+        renderAll();
+        showToast('State imported successfully.');
+      } catch { showToast('Invalid file.'); }
+    };
+    reader.readAsText(e.target.files[0]);
+  };
+  input.click();
+}
+
+async function loadState() {
+  setSyncStatus('loading');
+  try {
+    if (getPAT()) {
+      const remote = await loadStateFromGist();
+      _state = remote;
+      localStorage.setItem(LS_CACHE_KEY, JSON.stringify(_state));
+      setSyncStatus('idle');
+    } else {
+      _state = JSON.parse(localStorage.getItem(LS_CACHE_KEY)) || {};
+      setSyncStatus('idle');
+    }
+  } catch(e) {
+    console.warn('Gist load failed, using local cache', e);
+    _state = JSON.parse(localStorage.getItem(LS_CACHE_KEY)) || {};
+    setSyncStatus('offline');
+  }
+}
+
+function saveState() {
+  try { localStorage.setItem(LS_CACHE_KEY, JSON.stringify(_state)); } catch(e) {}
+  if (!getPAT()) return;
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(async () => {
+    setSyncStatus('saving');
+    try {
+      await saveStateToGist(_state);
+      setSyncStatus('idle');
+    } catch(e) {
+      console.warn('Gist save failed', e);
+      setSyncStatus('offline');
+    }
+  }, 1500);
+}
 
 function getStatuses(){return _state.statuses||{};}
 function getNotes(){return _state.notes||{};}
@@ -1217,8 +1408,8 @@ function showToast(msg){
 function tick(){const n=new Date();document.getElementById('clock').textContent=n.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'})+'  '+n.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});}
 tick();setInterval(tick,30000);
 
-// INIT — static sections only need one render
-renderAll();
+// INIT — async load from Gist (or LocalStorage fallback), then render
+loadState().then(() => { renderAll(); showSyncBanner(); });
 </script>
 </body>
 </html>
